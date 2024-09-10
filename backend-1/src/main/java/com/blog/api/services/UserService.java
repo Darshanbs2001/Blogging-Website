@@ -1,15 +1,16 @@
 package com.blog.api.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.blog.api.dto.UserDto;
-import com.blog.api.entities.User;
 
 public interface UserService {
 	UserDto createUser(UserDto user);
-	UserDto updateUser(UserDto user,int userid);
-	List<User> getAllUsers();
-	void deleteUser(int id);
-	UserDto getUserById(int id);
+	UserDto updateUser(UserDto user,UUID userid);
+	List<UserDto> getAllUsers();
+	void deleteUser(UUID id);
+	UserDto getUserById(UUID id);
+	//UserDto findUserByEmail(String email);
 
 }
