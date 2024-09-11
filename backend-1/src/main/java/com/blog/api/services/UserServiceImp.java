@@ -1,9 +1,9 @@
 package com.blog.api.services;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +16,8 @@ import com.blog.api.repos.UserRepo;
 class UserServiceImp implements UserService{
 	@Autowired
 	private UserRepo ur;
+	@Autowired
+	private ModelMapper mapper;
 	//it is done for testing purpose only
 	/*
 	 * @Override public UserDto findUserByEmail(String email) { User
@@ -25,19 +27,18 @@ class UserServiceImp implements UserService{
 
 	@Override
 	public UserDto createUser(UserDto user) {
-	    
-		UserDto user1=convertToDto(ur.save(convertToUser(user)));
-	   return user1;
+	   return userToDto( ur.save(dtoToUser(user)));
+	   
 	}
 
 	@Override
-	public UserDto updateUser(UserDto user, UUID userid) {
-		User dbuser=ur.findById(userid).orElseThrow(()->new ResourceNotFound("User","Id",String.valueOf(userid)));
+	public UserDto updateUser(UserDto user, Long userid) {
+		User dbuser=ur.findById(userid).orElseThrow(()->new ResourceNotFound("User","Id",userid));
 		dbuser.setName(user.getName());
 		dbuser.setEmail(user.getEmail());
 		dbuser.setPassword(user.getPassword());
 		dbuser.setAbout(user.getAbout());
-		return(convertToDto(ur.save(dbuser)));
+		return(userToDto(ur.save(dbuser)));
 	}
 	@Override
 	public List<UserDto> getAllUsers() {
@@ -46,14 +47,14 @@ class UserServiceImp implements UserService{
 		if(users.isEmpty()) {
 			throw new NoUsersFound("There are no users to be listed");
 		}
-		return users.stream().map(user->convertToDto(user)).collect(Collectors.toList());
+		return users.stream().map(user->userToDto(user)).collect(Collectors.toList());
 	
 	}
 
 	@Override
-	public void deleteUser(UUID id) {
+	public void deleteUser(Long id) {
 		// TODO Auto-generated method stub
-		User user=ur.findById(id).orElseThrow(()->new ResourceNotFound("User","Id",String.valueOf(id)));
+		User user=ur.findById(id).orElseThrow(()->new ResourceNotFound("User","Id",id));
 		System.out.println(user);
 		if(user!=null) {
 			ur.delete(user);
@@ -63,26 +64,16 @@ class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public UserDto getUserById(UUID id) {
-		User user=ur.findById(id).orElseThrow(()->new ResourceNotFound("User","Id",String.valueOf(id)));
-		return convertToDto(user);
+	public UserDto getUserById(Long id) {
+		User user=ur.findById(id).orElseThrow(()->new ResourceNotFound("User","Id",id));
+		return mapper.map(user,UserDto.class);
 	}
-	private User convertToUser(UserDto user) {
-		User newUser=new User();
-		newUser.setId(user.getId());
-		newUser.setName(user.getName());
-		newUser.setEmail(user.getEmail());
-		newUser.setPassword(user.getPassword());
-		newUser.setAbout(user.getAbout());
-		return newUser;
+	public User dtoToUser(UserDto u) {
+		User user=this.mapper.map(u, User.class);
+		return user;
 	}
-    private UserDto convertToDto(User user) {
-    	UserDto newUser=new UserDto();
-    	newUser.setId(user.getId());
-		newUser.setName(user.getName());
-		newUser.setEmail(user.getEmail());
-		newUser.setPassword(user.getPassword());
-		newUser.setAbout(user.getAbout());
-		return newUser;
-    }
+	public UserDto userToDto(User u) {
+		UserDto user=this.mapper.map(u, UserDto.class);
+		return user;
+	}
 }

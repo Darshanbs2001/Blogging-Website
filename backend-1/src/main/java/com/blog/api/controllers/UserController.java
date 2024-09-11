@@ -1,7 +1,6 @@
 package com.blog.api.controllers;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,12 +19,12 @@ import com.blog.api.services.UserService;
 import com.blog.api.utilities.ApiResponse;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 @RequestMapping("/apis/users")
 @RestController
 public class UserController {
 	@Autowired
 	private UserService us;
+
 @PostMapping
 public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
 	
@@ -45,7 +44,7 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
  * }
  */
  @DeleteMapping("/{id}")
- public ResponseEntity<ApiResponse> deleteUser(@PathVariable("id") UUID id){
+ public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id){
 		 us.deleteUser(id);
 		 return new ResponseEntity<ApiResponse>(new ApiResponse("user deleted successfully",true),HttpStatus.ACCEPTED);
  }
@@ -56,13 +55,13 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
 	 
  }
  @PutMapping("/{id}")
- public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto user,@PathVariable UUID id)
+ public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto user,@PathVariable Long id)
  {
 	 return new ResponseEntity<UserDto>(us.updateUser(user, id),HttpStatus.OK);
 	 
  }
  @GetMapping("/{id}")
- public ResponseEntity<UserDto> getById(@PathVariable UUID id){
+ public ResponseEntity<UserDto> getById(@PathVariable Long id){
 	 return new ResponseEntity<UserDto>(us.getUserById(id),HttpStatus.FOUND);
  }
 }

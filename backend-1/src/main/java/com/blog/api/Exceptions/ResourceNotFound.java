@@ -9,9 +9,9 @@ import lombok.Setter;
 public class ResourceNotFound extends RuntimeException {
 	private String resourceName;
 	private String resourceField;
-	private String id;
-	public ResourceNotFound(String resourceName, String resourceField, String id) {
-		super(String.format("%s doesnot have %s with %s", resourceName,resourceField,id));
+	private Long id;
+	public ResourceNotFound(String resourceName, String resourceField, Long id) {
+		super(String.format("%s doesnot have %s with %l", resourceName,resourceField,id));
 		this.resourceName = resourceName;
 		this.resourceField = resourceField;
 		this.id = id;

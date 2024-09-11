@@ -1,7 +1,5 @@
 package com.blog.api.entities;
 
-import java.util.UUID;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,8 +16,8 @@ import lombok.Setter;
 @Entity
 public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.UUID)
-	private UUID id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id=1l;
 	@Column(name="user_name",length=100,nullable=false)
 	private String name;
 	
