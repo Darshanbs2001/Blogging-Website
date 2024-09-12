@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import com.blog.api.Exceptions.NoUsersFound;
 import com.blog.api.Exceptions.ResourceNotFound;
 import com.blog.api.dto.CategoryDto;
 import com.blog.api.entities.Category;
 import com.blog.api.repos.CategoryRepo;
-
+@Service
 public class CategoryServiceImp implements CategoryService {
 	private CategoryRepo cr;
 	private ModelMapper mapper;

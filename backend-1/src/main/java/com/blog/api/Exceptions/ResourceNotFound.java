@@ -11,7 +11,7 @@ public class ResourceNotFound extends RuntimeException {
 	private String resourceField;
 	private Long id;
 	public ResourceNotFound(String resourceName, String resourceField, Long id) {
-		super(String.format("%s doesnot have %s with %l", resourceName,resourceField,id));
+		super(String.format("%s doesnot have %s with %d", resourceName,resourceField,id));
 		this.resourceName = resourceName;
 		this.resourceField = resourceField;
 		this.id = id;
