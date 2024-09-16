@@ -1,7 +1,6 @@
 package com.blog.api.repos;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

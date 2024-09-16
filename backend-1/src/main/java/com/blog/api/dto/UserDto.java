@@ -1,6 +1,10 @@
 package com.blog.api.dto;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
+
+import com.blog.api.entities.Post;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,4 +31,5 @@ private String password;
 @NotEmpty(message="Field cannot be empty")
 @Length(max=50,min=5)
 private String about;
+
 }

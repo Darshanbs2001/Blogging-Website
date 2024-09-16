@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/")
 
 public class PostController {
-	
+	 
 	@Autowired
 	private PostService postService;
 	
