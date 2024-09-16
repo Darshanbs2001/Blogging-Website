@@ -8,7 +8,7 @@ import com.blog.api.entities.Post;
 public interface PostService {
 
 	//create
-	PostDto createPost(PostDto postDto,Integer userId,Integer categoryId);
+	PostDto createPost(PostDto postDto,Long userId,Long categoryId);
 	
 	//update
 	Post updatePost(Integer postDto,Integer postId);

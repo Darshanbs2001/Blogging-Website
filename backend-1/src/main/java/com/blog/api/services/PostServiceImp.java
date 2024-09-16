@@ -32,7 +32,7 @@ public class PostServiceImp implements PostService {
 	private CategoryRepo categoryRepo;
 	
 	@Override
-	public PostDto createPost(PostDto postDto,Integer userId,Integer categoryId) {
+	public PostDto createPost(PostDto postDto,Long userId,Long categoryId) {
 		
 		User user=this.userRepo.findById(userId).orElseThrow(()->new ResourceNotFound("User", "User id", userId));
 		
