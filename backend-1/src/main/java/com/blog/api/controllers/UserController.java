@@ -25,7 +25,7 @@ public class UserController {
 	@Autowired
 	private UserService us;
 
-@PostMapping
+@PostMapping("/")
 public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
 	
 	UserDto user2=us.createUser(user);
