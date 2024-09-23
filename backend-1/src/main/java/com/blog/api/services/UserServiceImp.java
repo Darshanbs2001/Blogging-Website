@@ -68,10 +68,12 @@ class UserServiceImp implements UserService{
 		User user=ur.findById(id).orElseThrow(()->new ResourceNotFound("User","Id",id));
 		return mapper.map(user,UserDto.class);
 	}
+	
 	public User dtoToUser(UserDto u) {
 		User user=this.mapper.map(u, User.class);
 		return user;
 	}
+	
 	public UserDto userToDto(User u) {
 		UserDto user=this.mapper.map(u, UserDto.class);
 		return user;

@@ -10,11 +10,11 @@ public class ResourceNotFound extends RuntimeException {
 	private String resourceName;
 	private String resourceField;
 	private Long id;
-	public ResourceNotFound(String resourceName, String resourceField, Long id) {
-		super(String.format("%s doesnot have %s with %d", resourceName,resourceField,id));
+	public ResourceNotFound(String resourceName, String resourceField, Long postId) {
+		super(String.format("%s doesnot have %s with %d", resourceName,resourceField,postId));
 		this.resourceName = resourceName;
 		this.resourceField = resourceField;
-		this.id = id;
+		this.id = postId;
 	}
 	
 
