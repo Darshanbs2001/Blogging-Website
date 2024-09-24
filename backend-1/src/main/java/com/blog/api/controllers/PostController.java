@@ -13,6 +13,7 @@ import com.blog.api.utilities.ApiResponse;
 import com.blog.api.utilities.PostResponse;
 
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,7 +50,7 @@ public class PostController {
 	
 	@PostMapping("/user/{userId}/category/{categoryId}/posts")
 	public ResponseEntity<PostDto>createPost(
-			@RequestBody PostDto postDto,
+			@Valid @RequestBody PostDto postDto,
 			@PathVariable Long userId,
 			@PathVariable Long categoryId
 			){
@@ -116,7 +117,7 @@ public class PostController {
 	//update post
 	
 	@PutMapping("/posts/{postId}")
-	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto,@PathVariable Long postId) {
+	public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto,@PathVariable Long postId) {
 		
 		PostDto updatePost=this.postService.updatePost(postDto,postId);
 		

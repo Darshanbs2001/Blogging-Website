@@ -4,11 +4,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.blog.api.entities.Category;
-import com.blog.api.entities.Comment;
-import com.blog.api.entities.User;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 
-import lombok.Data;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,11 +18,12 @@ import lombok.Setter;
 public class PostDto {
 
 	private Long postId;
-	
+	@NotEmpty
+	@Length(min = 3 ,max=50)
 	private String title;
-	
+	@NotEmpty
 	private String content;
-
+	@URL
 	private String ImageName;
 	
 	private Date addedDate;
