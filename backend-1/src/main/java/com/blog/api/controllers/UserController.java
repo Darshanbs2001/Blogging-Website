@@ -48,7 +48,7 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
  * }
  */
  @DeleteMapping("/{id}")
-
+@PreAuthorize("hasRole('ADMIN')")
  public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id){
 		 us.deleteUser(id);
 		 return new ResponseEntity<ApiResponse>(new ApiResponse("user deleted successfully",true),HttpStatus.ACCEPTED);

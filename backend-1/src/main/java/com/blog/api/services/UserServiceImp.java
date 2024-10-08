@@ -63,6 +63,7 @@ class UserServiceImp implements UserService{
 		dbuser.setEmail(user.getEmail());
 		dbuser.setPassword(user.getPassword());
 		dbuser.setAbout(user.getAbout());
+		dbuser.setRoles(user.getRoles());
 		return(userToDto(ur.save(dbuser)));
 	}
 	@Override
