@@ -61,7 +61,6 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
 	 
  }
  @PutMapping("/{id}")
- 
  public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto user,@PathVariable Long id)
  {
 	 return new ResponseEntity<UserDto>(us.updateUser(user, id),HttpStatus.OK);

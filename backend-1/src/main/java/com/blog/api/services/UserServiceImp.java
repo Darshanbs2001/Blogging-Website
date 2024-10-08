@@ -61,7 +61,7 @@ class UserServiceImp implements UserService{
 		User dbuser=ur.findById(userid).orElseThrow(()->new ResourceNotFound("User","Id",userid));
 		dbuser.setName(user.getName());
 		dbuser.setEmail(user.getEmail());
-		dbuser.setPassword(user.getPassword());
+		dbuser.setPassword(encoder.encode(user.getPassword()));
 		dbuser.setAbout(user.getAbout());
 		dbuser.setRoles(user.getRoles());
 		return(userToDto(ur.save(dbuser)));

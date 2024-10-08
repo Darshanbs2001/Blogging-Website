@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 public class AuthController {
 	@Autowired
 	private UserService us;
-	@PostMapping("login")
+	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody LoginDto login){
 		return new ResponseEntity<LoginResponseDto>(new LoginResponseDto(us.loginUser(login),"logged in successfully"),HttpStatus.FOUND);
 	}

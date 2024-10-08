@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,8 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtService {
-	private final static String secret = "92E0A6159E8E651BBC1B1866ABC13C25218B717B623A4C3293A8384C99F13F6F4310EF916D4D2EF1F1F69278EEC6109D44BABF04267FC8A2778E3C99362A3506";
+	@Value("${security.jwt.key}")
+	private String secret;// "92E0A6159E8E651BBC1B1866ABC13C25218B717B623A4C3293A8384C99F13F6F4310EF916D4D2EF1F1F69278EEC6109D44BABF04267FC8A2778E3C99362A3506";
 	private final static long validity = TimeUnit.MINUTES.toMillis(30);
 
 	public String extract(String jwt) {
