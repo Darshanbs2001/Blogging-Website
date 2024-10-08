@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.blog.api.Exceptions.NoUsersFound;
 import com.blog.api.Exceptions.ResourceNotFound;
+import com.blog.api.Exceptions.UserNameNotFoundException;
 import com.blog.api.utilities.ApiResponse;
+import com.blog.api.utilities.LoginFailedResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,5 +42,9 @@ public ResponseEntity<Map<String,String>> handleMethodArgumentNotValid(MethodArg
 @ExceptionHandler(SQLException.class)
 public ResponseEntity<ApiResponse> handleSqlExceptions(SQLException e){
     return new ResponseEntity<ApiResponse>(new ApiResponse(e.getMessage(),false),HttpStatus.NOT_ACCEPTABLE);
+}
+@ExceptionHandler(UserNameNotFoundException.class)
+public ResponseEntity<LoginFailedResponse> handleUserNotFoundExceptions(UserNameNotFoundException e){
+	return new ResponseEntity<LoginFailedResponse>(new LoginFailedResponse(e.getMessage(),"unable to login",false),HttpStatus.NOT_FOUND);
 }
 }

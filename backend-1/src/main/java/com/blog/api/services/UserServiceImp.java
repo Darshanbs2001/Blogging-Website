@@ -5,19 +5,35 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.blog.api.Exceptions.NoUsersFound;
 import com.blog.api.Exceptions.ResourceNotFound;
+import com.blog.api.Exceptions.UserNameNotFoundException;
+import com.blog.api.dto.LoginDto;
 import com.blog.api.dto.UserDto;
 import com.blog.api.entities.User;
 import com.blog.api.repos.UserRepo;
+import com.blog.api.security.config.JwtService;
 @Service
 class UserServiceImp implements UserService{
 	@Autowired
 	private UserRepo ur;
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	@Autowired
+	private AuthenticationManager manager;
+	@Autowired
+	private JwtService jwts;
+	@Autowired
+	private UserDetailsImplementation authService;
 	//it is done for testing purpose only
 	/*
 	 * @Override public UserDto findUserByEmail(String email) { User
@@ -27,9 +43,18 @@ class UserServiceImp implements UserService{
 
 	@Override
 	public UserDto createUser(UserDto user) {
-	   return userToDto( ur.save(dtoToUser(user)));
+		
+		
+		User saveUser=new User();
+		saveUser.setAbout(user.getAbout());
+		saveUser.setEmail(user.getEmail());
+		saveUser.setAbout(user.getAbout());
+		saveUser.setName(user.getName());
+		saveUser.setPassword(encoder.encode(user.getPassword()));
+	   // saveUser.setRoles(user.getRoles());
+	   return userToDto( ur.save(saveUser));
 	   
-	}
+	} 
 
 	@Override
 	public UserDto updateUser(UserDto user, Long userid) {
@@ -41,6 +66,7 @@ class UserServiceImp implements UserService{
 		return(userToDto(ur.save(dbuser)));
 	}
 	@Override
+	
 	public List<UserDto> getAllUsers() {
 		// TODO Auto-generated method stub
 		List<User> users=ur.findAll();
@@ -77,5 +103,20 @@ class UserServiceImp implements UserService{
 	public UserDto userToDto(User u) {
 		UserDto user=this.mapper.map(u, UserDto.class);
 		return user;
+	}
+
+	@Override
+	public String loginUser(LoginDto login) {
+		// TODO Auto-generated method stub
+		
+		Authentication auth=manager.authenticate(new UsernamePasswordAuthenticationToken(
+				login.getEmail(),login.getPassword()
+				));
+		if(auth.isAuthenticated()) {
+			return jwts.generateToken(authService.loadUserByUsername(login.getEmail()));
+		}
+		else {
+			throw new UserNameNotFoundException("Invalid user");
+		}
 	}
 }

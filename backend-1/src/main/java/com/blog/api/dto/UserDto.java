@@ -27,4 +27,6 @@ private String password;
 @NotEmpty(message="Field cannot be empty")
 @Length(max=50,min=5)
 private String about;
+@Pattern(regexp="\\b(?:ROLE_ADMIN|ROLE_USER)\\b")
+private String roles;	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,15 +25,18 @@ import jakarta.validation.Valid;
 public class UserController {
 	@Autowired
 	private UserService us;
+	
+@PostMapping("signup")
 
-@PostMapping("/")
 public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
 	
 	UserDto user2=us.createUser(user);
+			
 	return new ResponseEntity<UserDto>(user2,HttpStatus.CREATED);
 	
 	
 }
+
 //This is done for just to see that jpa supports the findByEmail method
 /*
  * @GetMapping("/signin") public ResponseEntity<UserDto> singIn(@RequestBody
@@ -44,17 +48,20 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
  * }
  */
  @DeleteMapping("/{id}")
+
  public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id){
 		 us.deleteUser(id);
 		 return new ResponseEntity<ApiResponse>(new ApiResponse("user deleted successfully",true),HttpStatus.ACCEPTED);
  }
 	    
  @GetMapping
+ @PreAuthorize("hasAuthority('ROLE_USER')")
  public ResponseEntity<List<UserDto>> getAllUsers(){
 		 return new ResponseEntity<List<UserDto>>(us.getAllUsers(),HttpStatus.ACCEPTED);
 	 
  }
  @PutMapping("/{id}")
+ 
  public ResponseEntity<UserDto> updateUser(@Valid @RequestBody UserDto user,@PathVariable Long id)
  {
 	 return new ResponseEntity<UserDto>(us.updateUser(user, id),HttpStatus.OK);
