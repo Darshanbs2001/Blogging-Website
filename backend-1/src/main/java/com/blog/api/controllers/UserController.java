@@ -48,14 +48,14 @@ public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
  * }
  */
  @DeleteMapping("/{id}")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN_USER')")
  public ResponseEntity<ApiResponse> deleteUser(@PathVariable Long id){
 		 us.deleteUser(id);
 		 return new ResponseEntity<ApiResponse>(new ApiResponse("user deleted successfully",true),HttpStatus.ACCEPTED);
  }
 	    
  @GetMapping
- @PreAuthorize("hasAuthority('ROLE_USER')")
+ @PreAuthorize("hasAuthority('NORMAL_USER')")
  public ResponseEntity<List<UserDto>> getAllUsers(){
 		 return new ResponseEntity<List<UserDto>>(us.getAllUsers(),HttpStatus.ACCEPTED);
 	 

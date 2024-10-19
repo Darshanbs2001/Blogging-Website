@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.api.dto.LoginDto;
 import com.blog.api.dto.LoginResponseDto;
+import com.blog.api.dto.UserDto;
 import com.blog.api.services.UserService;
 
 import jakarta.validation.Valid;
@@ -21,5 +22,9 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponseDto> loginUser(@Valid @RequestBody LoginDto login){
 		return new ResponseEntity<LoginResponseDto>(new LoginResponseDto(us.loginUser(login),"logged in successfully"),HttpStatus.FOUND);
+	}
+	@PostMapping("/register")
+	public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto user){
+		return new ResponseEntity<UserDto>(us.createUser(user),HttpStatus.OK);
 	}
 }

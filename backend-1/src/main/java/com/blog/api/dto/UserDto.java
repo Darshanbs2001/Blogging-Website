@@ -1,5 +1,8 @@
 package com.blog.api.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
@@ -27,6 +30,6 @@ private String password;
 @NotEmpty(message="Field cannot be empty")
 @Length(max=50,min=5)
 private String about;
-@Pattern(regexp="\\b(?:ROLE_ADMIN|ROLE_USER)\\b")
-private String roles;	
+
+private Set<RoleDto> roles=new HashSet<>();	
 }

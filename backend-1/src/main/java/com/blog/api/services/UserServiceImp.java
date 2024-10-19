@@ -1,6 +1,7 @@
 package com.blog.api.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Service;
 import com.blog.api.Exceptions.NoUsersFound;
 import com.blog.api.Exceptions.ResourceNotFound;
 import com.blog.api.Exceptions.UserNameNotFoundException;
+import com.blog.api.config.AppConstants;
 import com.blog.api.dto.LoginDto;
 import com.blog.api.dto.UserDto;
+import com.blog.api.entities.Role;
 import com.blog.api.entities.User;
+import com.blog.api.repos.RoleRepo;
 import com.blog.api.repos.UserRepo;
 import com.blog.api.security.config.JwtService;
 @Service
@@ -34,6 +38,8 @@ class UserServiceImp implements UserService{
 	private JwtService jwts;
 	@Autowired
 	private UserDetailsImplementation authService;
+	@Autowired
+	private RoleRepo rr;
 	//it is done for testing purpose only
 	/*
 	 * @Override public UserDto findUserByEmail(String email) { User
@@ -51,6 +57,8 @@ class UserServiceImp implements UserService{
 		saveUser.setAbout(user.getAbout());
 		saveUser.setName(user.getName());
 		saveUser.setPassword(encoder.encode(user.getPassword()));
+		Role role=rr.findById(AppConstants.NORMAL_USER).orElseThrow(()->new ResourceNotFound("sorry could not find any roles please try again later","role",null));
+		saveUser.getRoles().add(role);
 	   // saveUser.setRoles(user.getRoles());
 	   return userToDto( ur.save(saveUser));
 	   
@@ -63,7 +71,6 @@ class UserServiceImp implements UserService{
 		dbuser.setEmail(user.getEmail());
 		dbuser.setPassword(encoder.encode(user.getPassword()));
 		dbuser.setAbout(user.getAbout());
-		dbuser.setRoles(user.getRoles());
 		return(userToDto(ur.save(dbuser)));
 	}
 	@Override

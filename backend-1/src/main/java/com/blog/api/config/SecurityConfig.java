@@ -1,4 +1,4 @@
-package com.blog.api.security.config;
+package com.blog.api.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.blog.api.security.config.JwtAuthenticationFilter;
 import com.blog.api.services.UserDetailsImplementation;
 
 @Configuration
@@ -40,13 +41,15 @@ public class SecurityConfig {
 		return http.
 				cors(Customizer.withDefaults())
 				.csrf(csrf->csrf.disable())
-				.authorizeHttpRequests(reg -> reg.requestMatchers("/apis/users/signup").permitAll()
+				.authorizeHttpRequests(reg -> reg.requestMatchers("/apis/register").permitAll()
 						.requestMatchers("/apis/login").permitAll()
 						//.requestMatchers("/apis/users").hasRole("USER")
 						//.requestMatchers("/apis/posts").hasRole("ADMIN")
 						//.requestMatchers("/apis/**").permitAll()
 						.anyRequest().authenticated())
-				.sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				        .httpBasic(Customizer.withDefaults())
+				        .formLogin(Customizer.withDefaults())			
+				        .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 //.httpBasic(Customizer.withDefaults())
                 //.formLogin(Customizer.withDefaults())
