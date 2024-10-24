@@ -1,0 +1,125 @@
+:root{
+    margin:0;
+    padding:0;
+}
+body{
+    width:100%;
+}
+header{
+    width:100;
+    margin:14px;
+    background-color: rgb(43 48 53);
+    color:rgb(219, 209, 209);
+    padding:15px;
+    display:flex;
+    justify-content: space-between;
+}
+.nav-items{
+    
+}
+.links{
+    display:none;
+    position: absolute;
+    width:350px;
+    
+    height:150px;
+    margin-right:15px;
+    margin-left:15px;
+    background-color: rgb(43 48 53);
+    right:0px;
+    box-shadow: 5px 5px 3px 1px ;
+    z-index: 9999;
+}
+.links.active{
+    
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 15px;
+    padding:20px;
+    top:15%;
+    transition: all ease ease-in-out 2s;
+}
+.link{
+    padding:5px;
+    width:100%;
+    justify-self: center;
+    text-align: center;
+    color:white;
+    text-decoration: none;
+}
+.link:hover{
+    background-color: grey;
+}
+.link.active{
+    text-decoration: underline;
+}
+button{
+    background: transparent;
+    border:2px solid rgb(153, 145, 145);
+    opacity:.7;
+    height:100%;
+}
+button.hide{
+   
+    display:none;
+}
+button.active{
+    display:block;
+}
+.btns{
+    font-size:30px;
+    fill: rgb(131, 125, 125);
+    color: white;
+    
+}
+@media  (min-width:780px) {
+    .icons{
+        display:none;
+    }
+    
+    .links{
+        position: relative;
+        box-shadow: none;
+        display:flex;
+        flex-direction: row;
+        width:auto;
+        height:auto;
+        margin:0;
+        padding:0;
+    }
+    header{
+        justify-content: flex-start;
+        gap:20px;
+    }
+    .links.active{
+        position: relative;
+        box-shadow: none;
+        display:flex;
+        flex-direction: row;
+        width:auto;
+        height:auto;
+        margin:0;
+        padding:0;
+    }
+    .nav-right{
+        width:100%;
+    }
+    .nav-items{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap:5px;
+        justify-content: space-between;
+        width:100%;
+    }
+
+    .link{
+        margin:0;
+        padding:0;
+        width:auto;
+    }
+    
+}
