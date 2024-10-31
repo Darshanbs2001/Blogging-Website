@@ -9,33 +9,32 @@ const NavIgation = () => {
     setOpen(!open);
   }
   return (
-    <header>
-      <div className="nav-left">
-        <h2>Blogging</h2>
-        
-      </div>
-      <div className="nav-right">
-        <div className="nav-items">
-          <div className="left">
-        <ul className={`${open?"links":" links active"}`}>
-          <NavLink className="link" to="/">Home</NavLink>
-          <NavLink className="link" to="/signup">Singup</NavLink>
-        </ul>
-        </div>
-        <div className="right">
-          <ul className={`${open?"links":"links active"}`}>
-
-          <NavLink className="link" to="/signin">some</NavLink>
-        </ul>
-        </div>
-        </div>
-       
+    <header className="nav-header">
+      <nav>
+        <h2 className="logo">Blogging</h2>
         <div className="icons">
-          <button className={`${open?"active":"hide"}`} onClick={toggleOpen}><IoMenu className='btns .active'></IoMenu></button>
-          
-          <button className={`${open?"hide":"open"}`}><MdCancel className='btns' onClick={toggleOpen}></MdCancel></button>
+          <button className={`${open?"active":"hidden"}`} onClick={toggleOpen}>
+            <IoMenu></IoMenu>
+          </button>
+          <button className={`${!open?"active":"hidden"}`} onClick={toggleOpen}>
+            <MdCancel></MdCancel>
+          </button>
         </div>
-      </div>
+        <div className={`${!open?"active nav-items":"hidden"}`}>
+          <div className="containers">
+            
+            <NavLink className="nav-links" to="/">
+              Home
+            </NavLink>
+          
+            <NavLink className="nav-links" to="/signin" >Signin</NavLink>
+            <NavLink className="nav-links" to="/signup" >Signup</NavLink>
+          </div>
+          <div className="containers">
+            <NavLink className="nav-links" to="/logout" >logout</NavLink>
+          </div>
+        </div>
+      </nav>
     </header>
   )
 }

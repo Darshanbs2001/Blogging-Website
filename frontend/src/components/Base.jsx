@@ -1,14 +1,13 @@
-import React from 'react'
-import { Navbar } from 'reactstrap'
-import Navigation from './NavIgation'
-import Example from './NavIgation'
+import NavIgation from "./NavIgation"
+
 
 const Base = ({title="Welecome to our Website",children}) => {
   return (
   
-    <Example/>
-   
-   
+   <>
+   <NavIgation/>
+   {children}
+   </>
 
 )
 }
