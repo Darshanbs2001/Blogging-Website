@@ -13,14 +13,14 @@ const NavIgation = () => {
       <nav>
         <h2 className="logo">Blogging</h2>
         <div className="icons">
-          <button className={`${open?"active":"hidden"}`} onClick={toggleOpen}>
+          <button className={`${!open?"active":"hidden"}`} onClick={toggleOpen}>
             <IoMenu></IoMenu>
           </button>
-          <button className={`${!open?"active":"hidden"}`} onClick={toggleOpen}>
+          <button className={`${open?"active":"hidden"}`} onClick={toggleOpen}>
             <MdCancel></MdCancel>
           </button>
         </div>
-        <div className={`${!open?"active nav-items":"hidden"}`}>
+        <div className={`${open?"active nav-items":"hidden"}`}>
           <div className="containers">
             
             <NavLink className="nav-links" to="/">

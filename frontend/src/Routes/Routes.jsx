@@ -9,7 +9,7 @@ const CustomRoutes = () => {
    <Routes>
     <Route path='/'>
      <Route index element={<Home/>}/>
-     <Route path='login' element={<Login/>} />
+     <Route path='signin' element={<Login/>} />
      <Route path='signup' element ={<SignUp/>}/>
      <Route path="about" element={<About/>}/>
     </Route>   
