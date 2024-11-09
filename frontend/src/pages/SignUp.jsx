@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Card, CardBody,Form, FormGroup, CardHeader, Container, Input, Label, Row, Col } from 'reactstrap'
 import Base from '../components/Base'
 
 const SignUp = () => {
+  const [data, setdata] = useState({
+    name:"",
+    email:"",
+    password:"",
+    about:""
+  });
+  const handleChange=(e,field)=>{
+    setdata((prev)=>{
+      let newObj={
+        ...prev,
+        [field]:e.target.value
+
+      }
+      return newObj;
+
+
+    })
+    console.log(data)
+  }
+  const handleSubmit=(e)=>{
+    e.preventDefault;
+    console.log(data);
+  }
   return (
     <Base>   
     <Container className='mt-4'>
@@ -24,6 +47,8 @@ const SignUp = () => {
               <Input type='text' 
               placeholder='enter you name'
                id="name"
+               onChange={(e)=>handleChange(e,"name")}
+
               />
 
             </FormGroup>
@@ -35,6 +60,7 @@ const SignUp = () => {
               <Input type='email' 
               placeholder='enter you Email'
                id="email"
+               onChange={(e)=>handleChange(e,"email")}
               />
               </FormGroup>
               <FormGroup>
@@ -45,6 +71,7 @@ const SignUp = () => {
               <Input type='password' 
               placeholder='enter you password'
                id="password"
+               onChange={(e)=>handleChange(e,"password")}
               />
               </FormGroup>
               <FormGroup>
@@ -55,6 +82,7 @@ const SignUp = () => {
               <Input type='password' 
               placeholder='enter the password again'
                id="confirm-password"
+
               />
 
             </FormGroup>
@@ -66,11 +94,12 @@ const SignUp = () => {
               type='textarea'
                id="about"
                bssize={{height:"250px"}}
+               onChange={(e)=>handleChange(e,"about")}
               />
             </FormGroup>
 
             <Container className='text-center'>
-              <Button color='light' outline>Register</Button>
+              <Button onClick={handleSubmit} color='light' outline>Register</Button>
               <Button color='secondary' type="reset" className='m-2' outline>Reset</Button>
             </Container>
             
