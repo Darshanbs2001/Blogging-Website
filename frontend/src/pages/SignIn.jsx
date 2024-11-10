@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import Base from '../components/Base'
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import { toast } from 'react-toastify'
+import signin from '../services/singin'
 
 
 const SignIn = () => {
@@ -18,9 +20,29 @@ const SignIn = () => {
     })
 
   }
-  const handleSubmit=(e)=>{
+  const handleReset=()=>{
+    setdata({
+      email:"",
+      password:""
+      
+    });
+    toast.success("success",{
+      position:"top-center"
+    })
+
+  }
+  const handleSubmit=async (e)=>{
     e.preventDefault;
-    console.log(data)
+    try{
+
+      const resp=await signin(data);
+      console.log(resp);
+      toast.success("logged in successfully")
+    }
+    catch(err){
+      console.log(err)
+      toast.error("login unsuccessfull");
+    }
   }
   return (
     <Base>
@@ -66,7 +88,7 @@ const SignIn = () => {
             </FormGroup>
             <Container className='text-center'>
               <Button onClick={handleSubmit}color='light' outline>Login</Button>
-              <Button color="secondary" type="reset"className='m-2' outline>reset</Button>
+              <Button onClick={handleReset} color="secondary" type="reset"className='m-2' outline>reset</Button>
             </Container>
 
 

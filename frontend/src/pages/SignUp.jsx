@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button, Card, CardBody,Form, FormGroup, CardHeader, Container, Input, Label, Row, Col } from 'reactstrap'
 import Base from '../components/Base'
+import signup from '../services/singup';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [data, setdata] = useState({
@@ -9,6 +12,7 @@ const SignUp = () => {
     password:"",
     about:""
   });
+ const navigate=useNavigate();
   const handleChange=(e,field)=>{
     setdata((prev)=>{
       let newObj={
@@ -20,11 +24,51 @@ const SignUp = () => {
 
 
     })
-    console.log(data)
+    //console.log(data)
   }
-  const handleSubmit=(e)=>{
+  const handleReset=()=>{
+    setdata({
+      name:'',
+      about:'',
+      email:'',
+      password:''
+    })
+    toast('🦄 Wow so easy!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+  
+      });
+  }
+  const handleSubmit=async(e)=>{
     e.preventDefault;
-    console.log(data);
+    //call the singupmethod
+    try{
+      let res=await signup(data);
+      console.log(res);
+      console.log(data);
+      handleReset();
+      navigate('/signin')
+      toast.success('added the user successfully',{
+        position:"top-center"
+      });
+      
+
+    }
+    catch(error){
+      //console.log(error)
+      toast.warning(error.message,{
+        position:"top-center"
+      });
+    }
+
+
+
   }
   return (
     <Base>   
@@ -100,7 +144,7 @@ const SignUp = () => {
 
             <Container className='text-center'>
               <Button onClick={handleSubmit} color='light' outline>Register</Button>
-              <Button color='secondary' type="reset" className='m-2' outline>Reset</Button>
+              <Button onClick={handleReset} color='secondary' type="reset" className='m-2' outline>Reset</Button>
             </Container>
             
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { IoMenu } from 'react-icons/io5'
 import { MdCancel } from 'react-icons/md';
 import { NavLink } from 'react-router-dom'
@@ -10,7 +10,7 @@ const NavIgation = () => {
   }
   return (
     <header className="nav-header">
-      <nav>
+      <nav >
         <h2 className="logo">Blogging</h2>
         <div className="icons">
           <button className={`${!open?"active":"hidden"}`} onClick={toggleOpen}>
