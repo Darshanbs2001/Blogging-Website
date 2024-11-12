@@ -1,6 +1,6 @@
 import  { useState } from 'react'
 import Base from '../components/Base'
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Row } from 'reactstrap'
+import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap'
 import { toast } from 'react-toastify'
 import signin from '../services/singin'
 
@@ -10,6 +10,11 @@ const SignIn = () => {
     email:"",
     password:"",
   })
+  const [error,setError]=useState({
+    errors:{},
+    isError:false
+  }
+  )
   const handleChange=(e,field)=>{
     setdata((prev)=>{
       let newObj={
@@ -36,12 +41,22 @@ const SignIn = () => {
     try{
 
       const resp=await signin(data);
+      setError({error:{},isError:false})
       console.log(resp);
-      toast.success("logged in successfully")
+      toast.success("logged in successfully",{
+        position:"bottom-left"
+      })
     }
     catch(err){
       console.log(err)
-      toast.error("login unsuccessfull");
+      setError({
+        errors:err,
+        isError:true
+      })
+      console.log(error)
+      toast.error("wrong email or password try again",{
+        position:"bottom-left"
+      })
     }
   }
   return (
@@ -72,7 +87,11 @@ const SignIn = () => {
                 id="email"
                 placeholder='enter the email'
                 onChange={(e)=>handleChange(e,"email")}
+                invalid={error.errors?.response?.data?.email?true:false}
                />
+                <FormFeedback>
+                {error.errors?.response?.data?.email}
+               </FormFeedback>
             </FormGroup>
             
             <FormGroup>
@@ -84,7 +103,13 @@ const SignIn = () => {
                 id="password"
                 placeholder='enter the Password'
                 onChange={(e)=>handleChange(e,"password")}
+                invalid={error.errors?.response?.data?.password?true:false}
+                
                />
+               <FormFeedback>
+                {error.errors?.response?.data?.password}
+               </FormFeedback>
+              
             </FormGroup>
             <Container className='text-center'>
               <Button onClick={handleSubmit}color='light' outline>Login</Button>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Card, CardBody,Form, FormGroup, CardHeader, Container, Input, Label, Row, Col } from 'reactstrap'
+import { Button, Card, CardBody,Form, FormGroup, CardHeader, Container, Input, Label, Row, Col, FormFeedback } from 'reactstrap'
 import Base from '../components/Base'
 import signup from '../services/singup';
 import { toast } from 'react-toastify';
@@ -12,6 +12,10 @@ const SignUp = () => {
     password:"",
     about:""
   });
+  const [error,setError]=useState({
+    errors:{},
+    isError:false
+  })
  const navigate=useNavigate();
   const handleChange=(e,field)=>{
     setdata((prev)=>{
@@ -60,8 +64,12 @@ const SignUp = () => {
       
 
     }
-    catch(error){
-      //console.log(error)
+    catch(err){
+      console.log(error)
+      setError({
+        errors:err,
+        isError:true
+      })
       toast.warning(error.message,{
         position:"top-center"
       });
@@ -92,8 +100,11 @@ const SignUp = () => {
               placeholder='enter you name'
                id="name"
                onChange={(e)=>handleChange(e,"name")}
-
+               invalid={error.errors?.response?.data?.name?true:false}
               />
+              <FormFeedback>
+                {error.errors?.response?.data?.name}
+              </FormFeedback>
 
             </FormGroup>
             <FormGroup>
@@ -105,7 +116,11 @@ const SignUp = () => {
               placeholder='enter you Email'
                id="email"
                onChange={(e)=>handleChange(e,"email")}
+               invalid={error.errors?.response?.data?.email?true:false}
               />
+              <FormFeedback>
+                {error.errors?.response?.data?.email}
+              </FormFeedback>
               </FormGroup>
               <FormGroup>
               <Label for="password">
@@ -116,7 +131,12 @@ const SignUp = () => {
               placeholder='enter you password'
                id="password"
                onChange={(e)=>handleChange(e,"password")}
+              invalid={error.errors?.response?.data?.password?true:false}
+
               />
+              <FormFeedback>
+                {error.errors?.response?.data?.password}
+              </FormFeedback>
               </FormGroup>
               <FormGroup>
               <Label for="confirm-password">
@@ -126,8 +146,12 @@ const SignUp = () => {
               <Input type='password' 
               placeholder='enter the password again'
                id="confirm-password"
+               invalid={error.errors?.response?.data?.password?true:false}
 
               />
+              <FormFeedback>
+                {error.errors?.response?.data?.password}
+              </FormFeedback>
 
             </FormGroup>
             <FormGroup>
@@ -139,7 +163,11 @@ const SignUp = () => {
                id="about"
                bssize={{height:"250px"}}
                onChange={(e)=>handleChange(e,"about")}
+               invalid={error.errors?.response?.data?.about?true:false}
               />
+              <FormFeedback>
+                {error.errors?.response?.data?.about}
+              </FormFeedback>
             </FormGroup>
 
             <Container className='text-center'>
