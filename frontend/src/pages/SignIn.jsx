@@ -2,7 +2,8 @@ import  { useState } from 'react'
 import Base from '../components/Base'
 import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback, FormGroup, Input, Label, Row } from 'reactstrap'
 import { toast } from 'react-toastify'
-import signin from '../services/singin'
+import {signin} from '../services/Users'
+import { doLogin } from '../services/auth'
 
 
 const SignIn = () => {
@@ -43,22 +44,29 @@ const SignIn = () => {
       const resp=await signin(data);
       setError({error:{},isError:false})
       console.log(resp);
-      toast.success("logged in successfully",{
-        position:"bottom-left"
-      })
+      doLogin(resp,
+        ()=>{
+          console.log("login details is saved")
+        }
+      );
     }
     catch(err){
       console.log(err)
-      setError({
-        errors:err,
-        isError:true
-      })
-      console.log(error)
+      if(err.response.status==403)
+      {
       toast.error("wrong email or password try again",{
         position:"bottom-left"
       })
     }
+    else{
+      setError({
+        errors:err,
+        isError:true
+      })
+    }
+    
   }
+}
   return (
     <Base>
     <Container>

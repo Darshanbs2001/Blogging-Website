@@ -1,9 +1,12 @@
 import myAxios from "./myAxios"
 
-const signup= async (userData)=>{
+export const signup= async (userData)=>{
     const response=await myAxios.post('/apis/register',userData);
     console.log(response);
     return response.data;
 }
 
-export default signup;
+export async function signin(data){
+    const res=await myAxios.post('/apis/login',data);
+    return res.data;
+}

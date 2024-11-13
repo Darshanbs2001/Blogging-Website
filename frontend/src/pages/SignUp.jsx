@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Card, CardBody,Form, FormGroup, CardHeader, Container, Input, Label, Row, Col, FormFeedback } from 'reactstrap'
 import Base from '../components/Base'
-import signup from '../services/singup';
+import {signup} from '../services/Users'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
