@@ -2,7 +2,7 @@ import { ToastContainer } from "react-toastify"
 import NavIgation from "./NavIgation"
 
 
-const Base = ({title="Welecome to our Website",children}) => {
+const Base = (children) => {
   return (
   
    <>
