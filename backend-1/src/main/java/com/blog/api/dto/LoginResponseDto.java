@@ -5,11 +5,11 @@ import lombok.Data;
 @Data
 public class LoginResponseDto {
 private String token;
-private String message;
-public LoginResponseDto(String token, String message) {
-	super();
+private UserDto userdto;
+public LoginResponseDto(String token, UserDto userdto) {
+	
 	this.token = token;
-	this.message = message;
+	this.userdto = userdto;
 }
 
 }

@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.blog.api.Exceptions.UserNameNotFoundException;
-import com.blog.api.entities.User;
-import com.blog.api.entities.UserInfoDetails;
 import com.blog.api.repos.UserRepo;
 
 @Service

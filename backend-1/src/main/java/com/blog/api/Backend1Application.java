@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.blog.api.config.AppConstants;
 import com.blog.api.entities.Role;
@@ -25,7 +26,7 @@ public class Backend1Application implements CommandLineRunner {
 		Role role2=new Role();
 		role2.setId(AppConstants.ADMIN_USER);
 		role2.setName("ADMIN_USER");
-		
+ 		
 		repo.save(role1);
 		repo.save(role2);
 	}

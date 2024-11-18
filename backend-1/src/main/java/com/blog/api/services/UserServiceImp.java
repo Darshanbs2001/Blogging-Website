@@ -17,6 +17,7 @@ import com.blog.api.Exceptions.ResourceNotFound;
 import com.blog.api.Exceptions.UserNameNotFoundException;
 import com.blog.api.config.AppConstants;
 import com.blog.api.dto.LoginDto;
+import com.blog.api.dto.LoginResponseDto;
 import com.blog.api.dto.UserDto;
 import com.blog.api.entities.Role;
 import com.blog.api.entities.User;
@@ -114,17 +115,20 @@ class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public String loginUser(LoginDto login) {
+	public LoginResponseDto loginUser(LoginDto login) {
 		// TODO Auto-generated method stub
-		
+		User u=ur.findByEmail(login.getEmail()).orElseThrow(()->new UserNameNotFoundException("Invalid user"));
 		Authentication auth=manager.authenticate(new UsernamePasswordAuthenticationToken(
 				login.getEmail(),login.getPassword()
 				));
+		String token;
 		if(auth.isAuthenticated()) {
-			return jwts.generateToken(authService.loadUserByUsername(login.getEmail()));
+			token= jwts.generateToken(authService.loadUserByUsername(login.getEmail()));
+		   
 		}
 		else {
 			throw new UserNameNotFoundException("Invalid user");
 		}
+		return new LoginResponseDto(token, userToDto(u));
 	}
 }

@@ -5,6 +5,9 @@ import java.util.Set;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -32,4 +35,12 @@ private String password;
 private String about;
 
 private Set<RoleDto> roles=new HashSet<>();	
+@JsonIgnore
+public String getPassword() {
+	return this.password;
+}
+@JsonProperty
+public void setPassword(String password) {
+	this.password=password;
+}
 }

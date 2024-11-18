@@ -1,5 +1,8 @@
 package com.blog.api.utilities;
 
+import lombok.Data;
+
+@Data
 public class LoginFailedResponse {
 private String message;
 private String result;

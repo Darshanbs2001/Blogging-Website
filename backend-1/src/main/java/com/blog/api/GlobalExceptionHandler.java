@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -47,4 +48,9 @@ public ResponseEntity<ApiResponse> handleSqlExceptions(SQLException e){
 public ResponseEntity<LoginFailedResponse> handleUserNotFoundExceptions(UserNameNotFoundException e){
 	return new ResponseEntity<LoginFailedResponse>(new LoginFailedResponse(e.getMessage(),"unable to login",false),HttpStatus.NOT_FOUND);
 }
+@ExceptionHandler(InternalAuthenticationServiceException.class)
+	public ResponseEntity<LoginFailedResponse> handleLoginFailedExceptions(InternalAuthenticationServiceException e){
+		return new ResponseEntity<LoginFailedResponse>(new LoginFailedResponse(e.getMessage(),"unable to find user with the given details", false),HttpStatus.NOT_FOUND);
+	}
+
 }
