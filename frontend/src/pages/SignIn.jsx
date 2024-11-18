@@ -4,6 +4,7 @@ import { Button, Card, CardBody, CardHeader, Col, Container, Form, FormFeedback,
 import { toast } from 'react-toastify'
 import {signin} from '../services/Users'
 import { doLogin } from '../services/auth'
+import { useNavigate } from 'react-router-dom'
 
 
 const SignIn = () => {
@@ -16,6 +17,7 @@ const SignIn = () => {
     isError:false
   }
   )
+  const navigate=useNavigate();
   const handleChange=(e,field)=>{
     setdata((prev)=>{
       let newObj={
@@ -47,6 +49,7 @@ const SignIn = () => {
       doLogin(resp,
         ()=>{
           console.log("login details is saved")
+          navigate('/user/dashboard')
         }
       );
     }

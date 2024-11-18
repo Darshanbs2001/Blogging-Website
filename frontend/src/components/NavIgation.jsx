@@ -1,37 +1,76 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoMenu } from 'react-icons/io5'
 import { MdCancel } from 'react-icons/md';
 import { NavLink } from 'react-router-dom'
+import { doLogout, getCurrentUserDetails, isLoggedin } from '../services/auth';
 
 const NavIgation = () => {
-  const [open,setOpen]=useState(false);
-  const toggleOpen=()=>{
+  const [open, setOpen] = useState(false);
+  const [login, setLogin] = useState(false);
+  const [user,setUser]=useState(null);
+  useEffect(() => {
+    setLogin(isLoggedin());
+    setUser(getCurrentUserDetails());
+    console.log(user)
+
+  }, [login])
+
+  const toggleOpen = () => {
     setOpen(!open);
   }
+  const handleLogout=()=>{
+    doLogout(
+      ()=>{
+        console.log("user is logged out")
+
+      }
+      
+    )
+    setLogin(false);
+      setUser(null);
+  }
   return (
-    <header className="nav-header">
-      <nav >
+    <header className="nav-header px-2">
+      <nav className="px-5">
         <h2 className="logo">Blogging</h2>
         <div className="icons">
-          <button className={`${!open?"active":"hidden"}`} onClick={toggleOpen}>
+          <button className={`${!open ? "active" : "hidden"}`} onClick={toggleOpen}>
             <IoMenu></IoMenu>
           </button>
-          <button className={`${open?"active":"hidden"}`} onClick={toggleOpen}>
+          <button className={`${open ? "active" : "hidden"}`} onClick={toggleOpen}>
             <MdCancel></MdCancel>
           </button>
         </div>
-        <div className={`${open?"active nav-items":"hidden"}`}>
+        <div className={`${open ? "active nav-items" : "hidden"}`}>
           <div className="containers">
-            
-            <NavLink className="nav-links" to="/">
-              Home
+            {login&&
+
+            <NavLink className="nav-links" to="/user/dashboard">
+              New Feed
             </NavLink>
-          
-            <NavLink className="nav-links" to="/signin" >Signin</NavLink>
-            <NavLink className="nav-links" to="/signup" >Signup</NavLink>
+}
+
+
+
           </div>
           <div className="containers">
-            <NavLink className="nav-links" to="/logout" >logout</NavLink>
+            {
+              login ? (
+                <>
+                <NavLink className="nav-links " to='/profile'>Profile</NavLink>
+                <NavLink className="nav-links" to="/">{user.email}</NavLink>
+                <div className="nav-links" onClick={handleLogout} >logout</div>
+
+                </>
+              ) : (
+                <>             
+                 <NavLink className="nav-links" to="/signin" >Signin</NavLink>
+                 <NavLink className="nav-links" to="/signup" >Signup</NavLink>
+                </>
+
+              )
+            }
+
           </div>
         </div>
       </nav>

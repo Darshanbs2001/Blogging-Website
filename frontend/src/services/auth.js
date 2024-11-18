@@ -23,10 +23,10 @@ export const doLogout=(next)=>{
 }
 //get current user
 export const getCurrentUserDetails=()=>{
-    if(isLoggedin){
-        return JSON.parse(localStorage.getItem("data"))
+    if(isLoggedin()){
+        return JSON.parse(localStorage.getItem("data")).userdto;
     }
     else{
-        return false;
+        return undefined;
     }
 }
