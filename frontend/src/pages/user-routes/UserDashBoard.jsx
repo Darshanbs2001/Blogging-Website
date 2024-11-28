@@ -1,11 +1,10 @@
-import AddPost from "../../components/AddPost"
 import Base from "../../components/Base"
 
 function UserDashBoard() {
   return (
     <>
      <Base>
-      <AddPost/>
+      This is just the user dashboard
       </Base>
     </>
   )

@@ -1,19 +1,20 @@
 import { useEffect, useState } from 'react'
 import { IoMenu } from 'react-icons/io5'
 import { MdCancel } from 'react-icons/md';
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate} from 'react-router-dom'
 import { doLogout, getCurrentUserDetails, isLoggedin } from '../services/auth';
 
 const NavIgation = () => {
   const [open, setOpen] = useState(false);
   const [login, setLogin] = useState(false);
   const [user,setUser]=useState(null);
+  const navigate=useNavigate();
   useEffect(() => {
     setLogin(isLoggedin());
     setUser(getCurrentUserDetails());
     console.log(user)
 
-  }, [login])
+  }, [])
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -22,12 +23,15 @@ const NavIgation = () => {
     doLogout(
       ()=>{
         console.log("user is logged out")
+       
 
       }
       
     )
+    navigate('/')
     setLogin(false);
       setUser(null);
+    
   }
   return (
     <header className="nav-header px-2">
@@ -45,7 +49,7 @@ const NavIgation = () => {
           <div className="containers">
             {login&&
 
-            <NavLink className="nav-links" to="/user/dashboard">
+            <NavLink className="nav-links" to="/">
               New Feed
             </NavLink>
 }
@@ -58,7 +62,7 @@ const NavIgation = () => {
               login ? (
                 <>
                 <NavLink className="nav-links " to='/profile'>Profile</NavLink>
-                <NavLink className="nav-links" to="/">{user.email}</NavLink>
+                <NavLink className="nav-links" to="/user/add-post">{user.email}</NavLink>
                 <div className="nav-links" onClick={handleLogout} >logout</div>
 
                 </>

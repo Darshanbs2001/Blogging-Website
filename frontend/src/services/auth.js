@@ -1,6 +1,6 @@
 //isLoggedIn=>
 export const isLoggedin=()=>{
-    let data=localStorage.getItem("data");
+    let data=sessionStorage.getItem("data");
     if(data==null){
         return false;
     }
@@ -10,7 +10,7 @@ export const isLoggedin=()=>{
 }
 //doLogin=>
     export const doLogin=(data,next)=>{
-        localStorage.setItem("data",JSON.stringify(data))
+        sessionStorage.setItem("data",JSON.stringify(data))
         next();
     }
     
@@ -18,13 +18,21 @@ export const isLoggedin=()=>{
 //doLogout=>
 export const doLogout=(next)=>{
 
-    localStorage.removeItem("data");
+    sessionStorage.removeItem("data");
     next();
 }
 //get current user
 export const getCurrentUserDetails=()=>{
     if(isLoggedin()){
-        return JSON.parse(localStorage.getItem("data")).userdto;
+        return JSON.parse(sessionStorage.getItem("data")).userdto;
+    }
+    else{
+        return undefined;
+    }
+}
+export const getToken=()=>{
+    if(isLoggedin()){
+        return JSON.parse(sessionStorage.getItem("data")).token;
     }
     else{
         return undefined;

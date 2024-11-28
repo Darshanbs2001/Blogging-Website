@@ -6,23 +6,21 @@ import SignUp from '../pages/SignUp'
 import About from '../pages/About'
 import PrivateRoute from '../components/PrivateRoute'
 import UserDashBoard from '../pages/user-routes/userDashBoard'
-import { isLoggedin } from '../services/auth'
+import AddPostPage from '../pages/user-routes/AddPostPage'
 const CustomRoutes = () => {
   return (
    <Routes>
     <Route path='/'>
      <Route index element={<Home/>}/>
-     {isLoggedin()?null:
      
      <Route path='signin' element={<Login/>} />
-}
-{isLoggedin()?null:
+
      <Route path='signup' element ={<SignUp/>}/>
-}
      <Route path="about" element={<About/>}/>
     </Route>   
     <Route path="/user" element={<PrivateRoute/>}>
       <Route path="dashboard" element={<UserDashBoard/>}/>
+      <Route path="add-post" element={<AddPostPage/>}/>
     </Route>
     </Routes>
   )

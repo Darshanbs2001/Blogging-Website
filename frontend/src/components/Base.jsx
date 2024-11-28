@@ -1,14 +1,16 @@
 import { ToastContainer } from "react-toastify"
 import NavIgation from "./NavIgation"
+import { useEffect } from "react"
 
 
-const Base = (children) => {
+// eslint-disable-next-line react/prop-types
+const Base = ({children}) => {
+
   return (
   
    <>
    <NavIgation/>
    <ToastContainer/>
-
    {children}
    </>
 
