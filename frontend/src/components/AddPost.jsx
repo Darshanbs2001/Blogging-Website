@@ -4,13 +4,20 @@ import { fetchCategories } from '../services/categoryServices'
 import { toast } from 'react-toastify'
 import JoditEditor from 'jodit-react'
 import { doLogout } from '../services/auth'
-import { createPath } from 'react-router-dom'
 import { createPost } from '../services/postService'
+import { privateAxios } from '../services/myAxios'
+import { Navigate, useNavigate } from 'react-router-dom'
 
 const AddPost= () => {
       const [category, setCategory] = useState([]);
       const editor = useRef(null);
-      
+      const navigate=useNavigate();
+       
+      const [posterr,setPostError]=useState({
+         errors:{},
+         isError:false
+
+      })
       
       const [post, setpost] = useState({
          title:'',
@@ -56,9 +63,11 @@ const AddPost= () => {
             }
             catch (err) {
                if(err.status==403){
-                  doLogout()
+                  doLogout(()=>console.log("token expired"));
+                  navigate('/signin');
                }
-               console.log(err);
+               setPostError(err);
+               
                toast.error(err);
             }
          }
@@ -80,9 +89,11 @@ const AddPost= () => {
          try{
             const data=await createPost(post);
             console.log(data) 
+            toast.success("The post added successfully")
          }
          catch(err){
             console.log(err)
+
          }
 
 
