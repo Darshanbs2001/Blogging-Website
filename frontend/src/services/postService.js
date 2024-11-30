@@ -16,3 +16,6 @@ export const createPost=async(postData)=>{
     const res=await privateAxios.post(`/apis/user/${user.id}/category/${postData.categoryId}/posts`,postData);
     return res.data;
 }
+export async function getPosts(){
+    return await privateAxios.get('/apis/posts');
+}

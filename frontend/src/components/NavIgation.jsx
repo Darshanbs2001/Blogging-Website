@@ -49,7 +49,7 @@ const NavIgation = () => {
           <div className="containers">
             {login&&
 
-            <NavLink className="nav-links" to="/">
+            <NavLink className="nav-links" to="/user/dashboard">
               New Feed
             </NavLink>
 }
