@@ -34,7 +34,7 @@ public class CategoryController {
  //display all category
  @GetMapping
  public ResponseEntity<List<CategoryDto>> getAllCategory(){
-	 return new ResponseEntity<List<CategoryDto>>(cs.getAll(),HttpStatus.FOUND);
+	 return new ResponseEntity<List<CategoryDto>>(cs.getAll(),HttpStatus.OK);
  }
  @GetMapping("/{id}")
  public ResponseEntity<CategoryDto> getACategory(@PathVariable Long id){

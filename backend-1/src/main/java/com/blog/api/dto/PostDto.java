@@ -23,7 +23,7 @@ public class PostDto {
 	private String title;
 	@NotEmpty
 	private String content;
-	@URL
+	
 	private String ImageName;
 	
 	private Date addedDate;

@@ -24,6 +24,8 @@ import com.blog.api.entities.User;
 import com.blog.api.repos.RoleRepo;
 import com.blog.api.repos.UserRepo;
 import com.blog.api.security.config.JwtService;
+
+import jakarta.validation.Valid;
 @Service
 class UserServiceImp implements UserService{
 	@Autowired
@@ -64,6 +66,22 @@ class UserServiceImp implements UserService{
 	   return userToDto( ur.save(saveUser));
 	   
 	} 
+
+	@Override
+	public UserDto createAdmin(@Valid UserDto user) {
+		// TODO Auto-generated method stub
+		User saveUser=new User();
+		saveUser.setAbout(user.getAbout());
+		saveUser.setEmail(user.getEmail());
+		saveUser.setAbout(user.getAbout());
+		saveUser.setName(user.getName());
+		saveUser.setPassword(encoder.encode(user.getPassword()));
+		Role role=rr.findById(AppConstants.ADMIN_USER).orElseThrow(()->new ResourceNotFound("sorry could not find any roles please try again later","role",null));
+		saveUser.getRoles().add(role);
+	   // saveUser.setRoles(user.getRoles());
+	   return userToDto( ur.save(saveUser));
+	   
+	}
 
 	@Override
 	public UserDto updateUser(UserDto user, Long userid) {

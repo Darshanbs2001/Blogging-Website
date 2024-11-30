@@ -6,6 +6,8 @@ import com.blog.api.dto.LoginDto;
 import com.blog.api.dto.LoginResponseDto;
 import com.blog.api.dto.UserDto;
 
+import jakarta.validation.Valid;
+
 public interface UserService {
 	UserDto createUser(UserDto user);
 	UserDto updateUser(UserDto user,Long userid);
@@ -14,5 +16,6 @@ public interface UserService {
 	UserDto getUserById(Long id);
 	LoginResponseDto loginUser(LoginDto login);
 	//UserDto findUserByEmail(String email);
+	UserDto createAdmin(@Valid UserDto admin);
 
 }
