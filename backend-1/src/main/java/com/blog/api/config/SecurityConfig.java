@@ -47,6 +47,7 @@ public class SecurityConfig {
 				.csrf(csrf->csrf.disable())
 				.authorizeHttpRequests(reg -> reg.requestMatchers("/apis/register").permitAll()
 						.requestMatchers("/apis/register/admin").permitAll()
+						.requestMatchers("/apis/post/image/**").permitAll()
 						.requestMatchers("/swagger-ui/**",
 								"/v3/api-docs/**",
 								"/v2/api-docs",
