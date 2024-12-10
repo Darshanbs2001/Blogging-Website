@@ -19,3 +19,6 @@ export const createPost=async(postData)=>{
 export async function getPosts(pageNumber=0,NumberOfPosts=5){
     return await privateAxios.get(`/apis/posts?pageNumber=${pageNumber}&pageSize=${NumberOfPosts}`);
 }
+export async function getPostDetails(postId){
+    return await privateAxios.get(`/apis/posts/${postId}`);
+}
