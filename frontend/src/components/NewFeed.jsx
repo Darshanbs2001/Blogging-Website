@@ -1,28 +1,36 @@
 import  { useEffect, useState } from 'react'
 import { getPosts } from '../services/postService';
 import { toast } from 'react-toastify';
-import { Col, Container, Row } from 'reactstrap';
+import { Col, Container, Pagination, PaginationItem, PaginationLink, Row } from 'reactstrap';
 import Post from './Post';
 
 const NewFeed = () => {
     const [posts, setposts] = useState(null)
     useEffect(()=>{
-        //load the post
-        const loadData=async()=>{
-        try{ 
-        const {data}=await getPosts();
-        //console.log(data)
-        setposts(data);
-    
-        }catch(err)
-        {
-          console.log(err)
-          toast.error(err);
-        }
-        
-      }
-      loadData();
+      changePost(0,5);
       },[])
+      const changePost=async (pageNumber,NumberOfPosts=5)=>{
+        try{
+            //console.log(pageNumber);
+        const {data}=await getPosts(pageNumber,NumberOfPosts);
+        setposts(data);
+        console.log(posts)
+        window.scroll(0,0)
+      
+        }
+        catch(err){
+            
+            toast.error("Something went with post fetching")
+        }
+
+      }
+      function generatePageNumbers(pages){
+        let a=[]
+        for(let i=0;i<pages;i++){
+            a.push(i+1);
+        }
+        return a;
+      }
   return (
    <div className="container-flud">
     <Container>
@@ -39,9 +47,52 @@ const NewFeed = () => {
                     (post)=><Post key={post.postId} post={post}/>
                 )
             }
+             <Container>
+        <Pagination
+  aria-label="Page navigation example"
+  size="sm"
+>
+
+    
+  <PaginationItem disabled={posts?.pageNumber==0} onClick={()=>{
+    posts?.pageNumber==0?null :changePost(posts?.pageNumber-1);
+  }}>
+    <PaginationLink
+      href="#"
+      previous
+      
+    >
+      Previous
+    </PaginationLink>
+  </PaginationItem>
+  {
+    generatePageNumbers(posts?.totalPages).map((i)=>
+    {
+    return <PaginationItem key={i} onClick={()=>{changePost(i-1)}} active={posts.pageNumber==i-1}>
+        <PaginationLink>
+            {i}
+        </PaginationLink>
+    </PaginationItem>
+    }   
+)
+  }
+  <PaginationItem disabled={posts?.lastPage} onClick={()=>{
+    posts?.lastPage?null:changePost(posts?.pageNumber+1);
+  }}>
+    <PaginationLink
+      href="#"
+      next
+    >
+      Next
+    </PaginationLink>
+  </PaginationItem>
+  
+</Pagination>
+        </Container>
             </Col>
             
         </Row>
+       
     </Container>
    </div>
   )

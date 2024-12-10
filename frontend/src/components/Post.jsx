@@ -1,5 +1,5 @@
 
-import { Button, Card, CardBody, CardText, Container } from 'reactstrap'
+import { Button, Card, CardBody, CardText } from 'reactstrap'
 
 const Post = ({post={title:"This is the default title",content:"This is the default content"}}) => {
   return (
@@ -7,10 +7,12 @@ const Post = ({post={title:"This is the default title",content:"This is the defa
         <CardBody className='text-start'>
             <h1>{post?.title}</h1>
         
-        <CardText>
-            {post?.content.substring(0,30)}...
+        <CardText dangerouslySetInnerHTML={ {__html:post?.content.substring(0,100)+"..."}}>
+            
             
         </CardText>
+        {//post?.content
+        }
 
       <div>
         <Button>
