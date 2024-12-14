@@ -1,18 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button, Card, CardBody, Container, Input, Label } from 'reactstrap'
+import { Button, Card, CardBody, Container, FormFeedback, Input, Label } from 'reactstrap'
 import { fetchCategories } from '../services/categoryServices'
 import { toast } from 'react-toastify'
 import JoditEditor from 'jodit-react'
 import { doLogout } from '../services/auth'
 import { createPost } from '../services/postService'
-import { privateAxios } from '../services/myAxios'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const AddPost= () => {
       const [category, setCategory] = useState([]);
       const editor = useRef(null);
       const navigate=useNavigate();
-       
+      const [loading,setloading]=useState(false);
       const [posterr,setPostError]=useState({
          errors:{},
          isError:false
@@ -76,6 +75,7 @@ const AddPost= () => {
       }, [])
       let onSubmit=async (e)=>{
          e.preventDefault();
+         setloading(true);
          if(post.categoryId===-1){
             alert("Please select a category")
          }
@@ -90,17 +90,29 @@ const AddPost= () => {
             const data=await createPost(post);
             console.log(data) 
             toast.success("The post added successfully")
+            setPostError(null);
+            
+            setpost({title:"",content:"",categoryId:-1})
          }
          catch(err){
-            console.log(err)
+            console.log(err.response.data);
+            const error=err.response.data;
+            setPostError(error);
+            
 
          }
+         finally{
+            setloading(false);
+         }
+        
 
 
       }
 
       return (
+         
          <div className='wrapper'>
+            
             <Container className='mt-2'>
                <Card className='shadow'>
                   <CardBody>
@@ -109,19 +121,32 @@ const AddPost= () => {
                         <Input type='text' id='title' name="title"
                         onChange={(e)=>fieldChange(e)}
                         value={post.title}
+                        invalid={posterr?.title?true:false}
                         ></Input>
+                        <FormFeedback>
+                           {posterr?.title}
+                        </FormFeedback>
                      </div>
                      <div>
                         <Label for='content'>Post content</Label>
+                        
                         <JoditEditor
                            ref={editor}
                            value={post.content}
                            name="content"
+                           className={posterr?.content&&'visible-red'}
                            tabIndex={1} // tabIndex of textarea
                            //onBlur={(e)=>fieldChange(e)}
                            onChange={(e)=>contentChange(e)}
                            style={{height:'700px'}}
+                        
                         />
+                        <Input className='visible-none' 
+                         invalid={posterr?.content?true:false}
+                        ></Input>
+                        <FormFeedback>
+                           {posterr?.content}
+                        </FormFeedback>
                      </div>
                      <div>
                         <Label for='category'>Post category</Label>
@@ -139,7 +164,7 @@ const AddPost= () => {
                         </Input>
                      </div>
                      <Container className='text-center mt-2'>
-                        <Button color='primary' className='rounded-0' onClick={onSubmit}>Add Post</Button>
+                        <Button color='primary' disabled={loading} className='rounded-0' onClick={onSubmit}>{loading?"Please wait..":"Add Post"}</Button>
                         <Button color='danger' className='ms-2 rounded-0' onClick={handleReset}>Reset</Button>
 
                      </Container>

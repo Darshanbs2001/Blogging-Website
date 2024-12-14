@@ -3,7 +3,6 @@ import Base from "../../components/Base"
 import NewFeed from "../../components/NewFeed"
 
 function UserDashBoard() {
-
  
   return (
     <>

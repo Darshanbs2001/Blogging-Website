@@ -22,3 +22,6 @@ export async function getPosts(pageNumber=0,NumberOfPosts=5){
 export async function getPostDetails(postId){
     return await privateAxios.get(`/apis/posts/${postId}`);
 }
+export async function createComment(postId,comment){
+    return await privateAxios.post(`/apis/comments/post/${postId}/comments`,comment);
+}

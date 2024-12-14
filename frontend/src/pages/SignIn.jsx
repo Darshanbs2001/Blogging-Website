@@ -12,6 +12,7 @@ const SignIn = () => {
     email:"",
     password:"",
   })
+  const [loading,setloading]=useState(false);
   const [error,setError]=useState({
     errors:{},
     isError:false
@@ -43,9 +44,11 @@ const SignIn = () => {
     e.preventDefault;
     try{
 
+      setloading(true);
       const resp=await signin(data);
       setError({error:{},isError:false})
       console.log(resp);
+     
       doLogin(resp,
         ()=>{
           console.log("login details is saved")
@@ -68,10 +71,17 @@ const SignIn = () => {
       })
     }
     
+    
+  }
+  finally{
+    setloading(false);
   }
 }
   return (
+    
     <Base>
+ {
+            loading?<div className="wrapper"><div className="loader"></div></div>:
     <Container>
       <Row className="mt-4"> 
         <Col
@@ -82,6 +92,8 @@ const SignIn = () => {
           }
         }
         >
+         
+          
          <Card color='dark' inverse>
           <CardHeader>
             Login here!!
@@ -136,6 +148,7 @@ const SignIn = () => {
         </Col>
       </Row>
     </Container>
+}
     </Base>
   )
 }
