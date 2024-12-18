@@ -1,5 +1,5 @@
 import { getCurrentUserDetails, getToken } from "./auth";
-import myAxios from "./myAxios"
+import myAxios, { privateAxios } from "./myAxios"
 
 const fetchCategories=async()=>{
     let token=getToken();
@@ -16,4 +16,8 @@ const fetchCategories=async()=>{
 
 
 } 
-export {fetchCategories};
+async function loadPostByCategory(catgeoryId){
+    const res=await privateAxios.get(`/apis/category/${catgeoryId}/posts`)
+    return res;
+}
+export {fetchCategories,loadPostByCategory};

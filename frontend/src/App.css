@@ -47,6 +47,7 @@ nav{
 .nav-links:hover{
     text-decoration: none;
     opacity: 1;
+    cursor: pointer;
  
 }
 .nav-links.active{

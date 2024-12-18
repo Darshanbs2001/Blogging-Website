@@ -39,25 +39,20 @@ const NewFeed = () => {
   }
   return (
 
-    <div className="container-flud">
+    <div className="container-fluid">
       <Container>
         <Row>
-          <Col md={
-            {
-              size: 10,
-              offset: 1
-            }
-          }>
-            <h1>Total Blogs ({posts?.totalElements})</h1>
+          <Col>
+            <h2>Total Blogs ({posts?.totalElements})</h2>
             {
               posts?.content?.map(
                 (post) => <Post key={post.postId} post={post} />
               )
             }
-            <Container>
+            <Container className='py-3'>
               <Pagination
                 aria-label="Page navigation example"
-                size="sm"
+                size="md"
               >
 
 

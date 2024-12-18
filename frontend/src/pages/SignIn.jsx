@@ -35,9 +35,9 @@ const SignIn = () => {
       password:""
       
     });
-    toast.success("success",{
+    /*toast.success("success",{
       position:"top-center"
-    })
+    })*/
 
   }
   const handleSubmit=async (e)=>{
@@ -99,9 +99,9 @@ const SignIn = () => {
             Login here!!
           </CardHeader>
           <CardBody>
-          <Form>
+          <Form >
 
-            <FormGroup>
+            <FormGroup className="px-5">
               <Label for="email">
                 Email
               </Label>
@@ -117,7 +117,7 @@ const SignIn = () => {
                </FormFeedback>
             </FormGroup>
             
-            <FormGroup>
+            <FormGroup className="px-5">
               <Label for="password">
                 Password
               </Label>
@@ -136,7 +136,7 @@ const SignIn = () => {
             </FormGroup>
             <Container className='text-center'>
               <Button onClick={handleSubmit}color='light' outline>Login</Button>
-              <Button onClick={handleReset} color="secondary" type="reset"className='m-2' outline>reset</Button>
+              <Button onClick={handleReset} color="light" type="reset"className='m-2' outline>reset</Button>
             </Container>
 
 

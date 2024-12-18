@@ -3,26 +3,26 @@ import { Button, Card, CardBody, Container, FormFeedback, Input, Label } from 'r
 import { fetchCategories } from '../services/categoryServices'
 import { toast } from 'react-toastify'
 import JoditEditor from 'jodit-react'
-import { doLogout } from '../services/auth'
-import { createPost } from '../services/postService'
+import { doLogout, getCurrentUserDetails } from '../services/auth'
+import { createPost, updatePostId } from '../services/postService'
 import { useNavigate } from 'react-router-dom'
 
-const AddPost= () => {
+const AddPost= ({post,setpost,loadPosts,posterr,setPostError,updating,setUpdating}) => {
       const [category, setCategory] = useState([]);
       const editor = useRef(null);
       const navigate=useNavigate();
       const [loading,setloading]=useState(false);
-      const [posterr,setPostError]=useState({
+     /* const [posterr,setPostError]=useState({
          errors:{},
          isError:false
 
-      })
+      })*/
       
-      const [post, setpost] = useState({
+      /*const [post, setpost] = useState({
          title:'',
          content:'',
          categoryId:-1
-      })
+      })*/
       const contentChange=(e)=>
       {
          console.log(e)
@@ -108,6 +108,26 @@ const AddPost= () => {
 
 
       }
+      async function updatePostById(id){
+         try{
+            const updatedPost={
+               title:post?.title,
+               content:post?.content,
+               categoryId:post?.categoryId
+            }
+            const {data}=await updatePostId(id,updatedPost);
+            console.log(data)
+            loadPosts(getCurrentUserDetails().id);
+            setUpdating(false)
+            setpost({title:'',content:'',categoryId:-1})
+            toast.success("The post has been updated")
+
+         }
+         catch(err){
+            toast.error(err);
+         }
+
+      }
 
       return (
          
@@ -151,7 +171,7 @@ const AddPost= () => {
                      <div>
                         <Label for='category'>Post category</Label>
                         <Input type='select' id='category' name="categoryId" 
-                        value={post.categoryId}
+                        value={post?.categoryId}
                         defaultValue={-1}
                         onChange={(e)=>fieldChange(e)}>
                            
@@ -164,7 +184,9 @@ const AddPost= () => {
                         </Input>
                      </div>
                      <Container className='text-center mt-2'>
+                        {updating?<Button color='primary' className='rounded-0' onClick={()=>updatePostById(post?.postId)}> Update</Button>:
                         <Button color='primary' disabled={loading} className='rounded-0' onClick={onSubmit}>{loading?"Please wait..":"Add Post"}</Button>
+}
                         <Button color='danger' className='ms-2 rounded-0' onClick={handleReset}>Reset</Button>
 
                      </Container>

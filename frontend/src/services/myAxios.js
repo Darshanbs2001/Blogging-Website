@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "./auth";
+import { doLogout, getToken } from "./auth";
 
 
 const myAxios=axios.create({
@@ -26,6 +26,10 @@ privateAxios.interceptors.request.use(
         }
         return config;
     },(error)=>{
+        /*if(error.status===403){
+            doLogout();
+
+        }*/
         return Promise.reject(error);
     }
 )

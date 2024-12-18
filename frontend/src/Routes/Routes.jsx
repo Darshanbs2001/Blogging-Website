@@ -8,6 +8,7 @@ import PrivateRoute from '../components/PrivateRoute'
 import UserDashBoard from '../pages/user-routes/userDashBoard'
 import AddPostPage from '../pages/user-routes/AddPostPage'
 import PostPage from '../pages/PostPage'
+import CategoriesPage from '../pages/user-routes/categoriesPage'
 const CustomRoutes = () => {
   return (
    <Routes>
@@ -22,6 +23,7 @@ const CustomRoutes = () => {
     <Route path="/user" element={<PrivateRoute/>}>
       <Route path="dashboard" element={<UserDashBoard/>}/>
       <Route path="add-post" element={<AddPostPage/>}/>
+      <Route path="categories/:categoryId" element={<CategoriesPage/>}/>
       <Route path="post/:postId" element={<PostPage/>}/>
     </Route>
     </Routes>
