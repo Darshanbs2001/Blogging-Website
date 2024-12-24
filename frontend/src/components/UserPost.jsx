@@ -5,7 +5,7 @@ import { Button, Card, CardBody, CardText } from 'reactstrap'
 const UserPost = ({post,deletePost,updatePost}) => {
     
     return (
-        <Card className="m-1 shadow-sm">
+        <Card className="m-1 shadow-sm post">
             <CardBody className='text-start'>
                 <h1>{post?.title}</h1>
 

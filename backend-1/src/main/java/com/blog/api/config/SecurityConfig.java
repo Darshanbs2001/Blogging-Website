@@ -46,6 +46,7 @@ public class SecurityConfig {
 				cors(Customizer.withDefaults())
 				.csrf(csrf->csrf.disable())
 				.authorizeHttpRequests(reg -> reg.requestMatchers("/apis/register").permitAll()
+						.requestMatchers("/apis/login").permitAll()	
 						.requestMatchers("/apis/register/admin").permitAll()
 						.requestMatchers("/apis/post/image/**").permitAll()
 						.requestMatchers("/swagger-ui/**",

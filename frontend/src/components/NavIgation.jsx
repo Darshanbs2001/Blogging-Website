@@ -61,7 +61,8 @@ const NavIgation = () => {
             {
               login ? (
                 <>
-                <NavLink className="nav-links " to='/profile'>Profile</NavLink>
+                {//<NavLink className="nav-links " to='/profile'>Profile</NavLink> 
+                }
                 <NavLink className="nav-links" to="/user/add-post">{user.email}</NavLink>
                 <div className="nav-links" onClick={handleLogout} >logout</div>
 

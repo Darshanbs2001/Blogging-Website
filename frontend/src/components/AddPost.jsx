@@ -131,7 +131,7 @@ const AddPost= ({post,setpost,loadPosts,posterr,setPostError,updating,setUpdatin
 
       return (
          
-         <div className='wrapper'>
+         <div className='wrapper '>
             
             <Container className='mt-2'>
                <Card className='shadow'>

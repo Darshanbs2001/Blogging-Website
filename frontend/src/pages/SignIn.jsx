@@ -58,10 +58,10 @@ const SignIn = () => {
     }
     catch(err){
       console.log(err)
-      if(err.response.status==403)
+      if(err.response.status==403||err.response.status==404||err.response.status==406)
       {
       toast.error("wrong email or password try again",{
-        position:"bottom-left"
+        position:"top-right"
       })
     }
     else{

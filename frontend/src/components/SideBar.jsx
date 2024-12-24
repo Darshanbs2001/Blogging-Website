@@ -24,13 +24,13 @@ function SideBar() {
             
         }
   return (
-    <ListGroup>
-        <ListGroupItem action={true} tag={Link} to="/user/dashboard"  >
+    <ListGroup >
+        <ListGroupItem className="sidebar" action={true} tag={Link} to="/user/dashboard"  >
             All
         </ListGroupItem>
         {categories?.map((c,index)=>{
             return(
-                <ListGroupItem key={index} action={true}  tag={Link} to={"/user/categories/"+c.id}>
+                <ListGroupItem className="sidebar" key={index} action={true}  tag={Link} to={"/user/categories/"+c.id}>
                 {
                     c.categoryTitle
                 }
